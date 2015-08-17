@@ -1,0 +1,23 @@
+{
+  "name": "demo-backend-express",
+  "version": "1.0.0",
+  "description": "'express' version of back-end",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matt Brendzel",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^1.4.2",
+    "body-parser": "^1.13.3",
+    "cors": "^2.7.1",
+    "express": "^4.13.3",
+    "morgan": "^1.6.1",
+    "path": "^0.11.14",
+    "pg": "^4.4.1",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.5.1",
+    "sequelize-cli": "^1.7.4"
+  }
+}
