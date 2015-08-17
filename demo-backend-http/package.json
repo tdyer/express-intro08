@@ -1,0 +1,19 @@
+{
+  "name": "demo-backend-http",
+  "version": "1.0.0",
+  "description": "'http' version of back-end",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matt Brendzel",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^1.4.2",
+    "path": "^0.11.14",
+    "pg": "^4.4.1",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.5.1",
+    "sequelize-cli": "^1.7.4"
+  }
+}
