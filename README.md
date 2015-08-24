@@ -120,12 +120,15 @@ Extracting things like IDs from urls is extremely easy with Express - much simpl
 
 ```javascript
 app.get('/people/:id', function(req, res){
+  console.log("id is " + req.params.id);
   res.send("people#show");
 });
 app.patch('/people/:id', function(req, res){
+  console.log("id is " + req.params.id);
   res.send("people#update");
 });
 app.delete('/people/:id', function(req, res){
+  console.log("id is " + req.params.id);
   res.send("people#destroy");
 });
 ```
