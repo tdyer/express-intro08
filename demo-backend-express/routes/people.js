@@ -1,4 +1,5 @@
 var express = require('express');
+var util = require('util');
 var models = require('../models/index');
 var router = express.Router();
 
@@ -10,7 +11,10 @@ router.get('/', function(req, res) {    // index
   });
   // res.send("people#index");
 });
+
+// curl -H "Accept: application/json" -H "Content-type: application/json" -d '{"firstName":"Tom","lastName":"Dyer"}' http://localhost:8000/people
 router.post('/', function(req, res) {   // create
+  console.log("body is " + util.inspect(req.body));
   models.Person.create(req.body).then(function(person){
     res.json(person);
   }, function(err){
