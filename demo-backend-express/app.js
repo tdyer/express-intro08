@@ -1,14 +1,27 @@
 var express = require('express'),
     http = require('http'),
+    util = require('util'),
     bodyParser = require('body-parser'),
-    cors = require('cors');
+    cors = require('cors'),
+    fs = require('fs'),
+    morgan = require('morgan'),
+    accessLogStream = fs.createWriteStream('logs/access.log', {flags: 'a'}),
+    errorhandler = require('errorhandler'),
+    app = express();
 
-var app = express();
+
+// if(process.env.NODE_ENV == 'development'){
+//   console.log("In development mode");
+//   app.use(errorhandler());
+// }
+
+// Apache formatted log
+app.use(morgan('combined', {stream: accessLogStream}));
 
 app.use(cors());
 app.use(bodyParser.json());
 
-// GET /
+// GET / root
 app.use('/', require('./routes/index'));
 
 // people CRUD actions
@@ -60,9 +73,37 @@ app.get('/contacts', function(req, res, next){
   res.json(res.locals.contacts);
 });
 
-app.get('/*', function(req, res){
-  res.send("Oh, well don't know how to handle this URL!");
+app.use(function(req, res, next){
+  var err = new Error('Not Found');
+  err.status = 404;
+  // Call express error handler with the error, we've created
+  // This will print out the stack trace
+  next(err);
 });
+
+// error handlers
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.send('error', {
+      message: err.message,
+      error: err
+    });
+  });
+} else if (app.get('env') === 'production') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.send('error', {
+      message: err.message,
+      error: {}             // Don't show error messages in production mode.
+    });
+  });
+}
+
+// Catch all
+// app.get('/*', function(req, res){
+//   res.send("Oh, well don't know how to handle this URL!");
+// });
 
 var port = 8000;
 var server = http.createServer(app);
